@@ -2,7 +2,7 @@
 
 import { usePathname } from "next/navigation";
 import * as React from "react";
-import Link from "next/link";
+import NextLink from "next/link";
 import clsx from "clsx";
 import AppBar from "@mui/material/AppBar";
 import Box from "@mui/material/Box";
@@ -16,14 +16,13 @@ import Avatar from "@mui/material/Avatar";
 import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
-import AdbIcon from "@mui/icons-material/Adb";
+import LinkIcon from "@mui/icons-material/Link";
 const links = [
-    { name: "TinyURL", href: "/", icon: null },
-    { name: "Features", href: "/features", icon: null },
-    { name: "Register", href: "/register", icon: null },
-    { name: "Login", href: "/login", icon: null },
+    { name: "Home", href: "/", icon: null },
+    { name: "Features", href: "features", icon: null },
+    { name: "Register", href: "register", icon: null },
+    { name: "Login", href: "login", icon: null },
 ];
-const pages = ["Products", "Pricing", "Blog"];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 export default function HeaderNav() {
     const pathname = usePathname();
@@ -49,10 +48,10 @@ export default function HeaderNav() {
         setAnchorElUser(null);
     };
     return (
-        <AppBar position="static">
+        <AppBar position="sticky">
             <Container maxWidth="xl">
                 <Toolbar disableGutters>
-                    <AdbIcon
+                    <LinkIcon
                         sx={{ display: { xs: "none", md: "flex" }, mr: 1 }}
                     />
                     <Typography
@@ -70,7 +69,7 @@ export default function HeaderNav() {
                             textDecoration: "none",
                         }}
                     >
-                        LOGO
+                        TinyURL
                     </Typography>
 
                     <Box
@@ -107,26 +106,33 @@ export default function HeaderNav() {
                                 display: { xs: "block", md: "none" },
                             }}
                         >
-                            {pages.map((page) => (
-                                <MenuItem
-                                    key={page}
-                                    onClick={handleCloseNavMenu}
-                                >
-                                    <Typography textAlign="center">
-                                        {page}
-                                    </Typography>
-                                </MenuItem>
-                            ))}
+                            {links.map((link) => {
+                                return (
+                                    <MenuItem
+                                        key={link.name}
+                                        href={link.href}
+                                        onClick={handleCloseNavMenu}
+                                        // className={clsx({
+                                        //     primary: pathname === link.href,
+                                        // })}
+                                        disabled={pathname === link.href}
+                                    >
+                                        <Typography textAlign="center">
+                                            {link.name}
+                                        </Typography>
+                                    </MenuItem>
+                                );
+                            })}
                         </Menu>
                     </Box>
-                    <AdbIcon
+                    <LinkIcon
                         sx={{ display: { xs: "flex", md: "none" }, mr: 1 }}
                     />
                     <Typography
                         variant="h5"
                         noWrap
                         component="a"
-                        href="#app-bar-with-responsive-menu"
+                        href="/"
                         sx={{
                             mr: 2,
                             display: { xs: "flex", md: "none" },
@@ -138,7 +144,7 @@ export default function HeaderNav() {
                             textDecoration: "none",
                         }}
                     >
-                        LOGO
+                        TinyURL
                     </Typography>
                     <Box
                         sx={{
@@ -146,18 +152,34 @@ export default function HeaderNav() {
                             display: { xs: "none", md: "flex" },
                         }}
                     >
-                        {pages.map((page) => (
-                            <Button
-                                key={page}
-                                onClick={handleCloseNavMenu}
-                                sx={{ my: 2, color: "white", display: "block" }}
-                            >
-                                {page}
-                            </Button>
-                        ))}
+                        {links.map((link) => {
+                            return (
+                                <Button
+                                    component={NextLink}
+                                    key={link.name}
+                                    href={link.href}
+                                    onClick={handleCloseNavMenu}
+                                    sx={{
+                                        "&.active": {
+                                            opacity: "0.4",
+                                        },
+                                        "&:hover": {
+                                            opacity: "0.4",
+                                        },
+                                        my: 2,
+                                        color: "inherit",
+                                        display: "block",
+                                    }}
+                                    disabled={pathname === link.href}
+                                >
+                                    {link.name}
+                                </Button>
+                            );
+                        })}
                     </Box>
 
-                    <Box sx={{ flexGrow: 0 }}>
+                    {/* Icon user section */}
+                    {/* <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">
                             <IconButton
                                 onClick={handleOpenUserMenu}
@@ -196,29 +218,7 @@ export default function HeaderNav() {
                                 </MenuItem>
                             ))}
                         </Menu>
-                    </Box>
-                    <div className="z-10 w-full max-w-5xl items-center justify-between font-mono text-sm lg:flex">
-                        {links.map((link) => {
-                            const LinkIcon = link.icon;
-                            return (
-                                <Link
-                                    key={link.name}
-                                    href={link.href}
-                                    className={clsx(
-                                        "flex h-[48px] grow items-center justify-center gap-2 rounded-md bg-gray-50 p-3 text-sm font-medium hover:bg-sky-100 hover:text-blue-600 md:flex-none md:justify-start md:p-2 md:px-3",
-                                        {
-                                            primary: pathname === link.href,
-                                        }
-                                    )}
-                                >
-                                    {/* <LinkIcon className="w-6" /> */}
-                                    <p className="hidden md:block">
-                                        {link.name}
-                                    </p>
-                                </Link>
-                            );
-                        })}
-                    </div>
+                    </Box> */}
                 </Toolbar>
             </Container>
         </AppBar>
