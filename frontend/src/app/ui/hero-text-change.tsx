@@ -1,14 +1,10 @@
 "use client";
 import { Box, Typography } from "@mui/material";
 import React, { useState, useEffect } from "react";
-export default function HeroTextChange() {
-    const words = [
-        "Business",
-        "Creators",
-        "Educators",
-        "Developers",
-        "Designers",
-    ];
+interface StringListProps {
+    words: string[];
+}
+export default function HeroTextChange({ words }: StringListProps) {
     const [index, setIndex] = useState(0);
     const [subIndex, setSubIndex] = useState(0);
     const [reverse, setReverse] = useState(false);
@@ -18,8 +14,12 @@ export default function HeroTextChange() {
     useEffect(() => {
         if (subIndex === words[index].length + 1 && !reverse) {
             setReverse(true);
-            setTimeout(() => setSubIndex((prev) => prev - 1), 250); // Delay before starting to delete
-            return;
+            // Delay before starting to delete
+            const timeoutId = setTimeout(
+                () => setSubIndex((prev) => prev - 1),
+                250
+            );
+            return () => clearTimeout(timeoutId);
         }
 
         if (subIndex === 0 && reverse) {
@@ -49,10 +49,5 @@ export default function HeroTextChange() {
         setText(words[index].substring(0, subIndex));
     }, [subIndex, index]);
 
-    return (
-        <Typography variant="h5" className="font-normal">
-            For{" "}
-            <span className="font-bold underline blinking-cursor">{text}|</span>
-        </Typography>
-    );
+    return <span className="font-bold underline blinking-cursor">{text}|</span>;
 }

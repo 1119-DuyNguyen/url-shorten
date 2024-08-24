@@ -17,11 +17,12 @@ import Button from "@mui/material/Button";
 import Tooltip from "@mui/material/Tooltip";
 import MenuItem from "@mui/material/MenuItem";
 import LinkIcon from "@mui/icons-material/Link";
+import ThemeToggle from "./theme-toggle";
 const links = [
     { name: "Home", href: "/", icon: null },
-    { name: "Features", href: "features", icon: null },
-    { name: "Register", href: "register", icon: null },
-    { name: "Login", href: "login", icon: null },
+    { name: "Features", href: "/features", icon: null },
+    // { name: "Register", href: "/register", icon: null },
+    // { name: "Login", href: "/login", icon: null },
 ];
 const settings = ["Profile", "Account", "Dashboard", "Logout"];
 export default function HeaderNav() {
@@ -112,9 +113,6 @@ export default function HeaderNav() {
                                         key={link.name}
                                         href={link.href}
                                         onClick={handleCloseNavMenu}
-                                        // className={clsx({
-                                        //     primary: pathname === link.href,
-                                        // })}
                                         disabled={pathname === link.href}
                                     >
                                         <Typography textAlign="center">
@@ -170,14 +168,20 @@ export default function HeaderNav() {
                                         color: "inherit",
                                         display: "block",
                                     }}
-                                    disabled={pathname === link.href}
+                                    className={clsx({
+                                        active: pathname === link.href,
+                                    })}
+                                    // disabled={pathname === link.href}
                                 >
                                     {link.name}
                                 </Button>
                             );
                         })}
                     </Box>
-
+                    {/* Icon user section */}
+                    <Box sx={{ flexGrow: 0 }}>
+                        <ThemeToggle></ThemeToggle>
+                    </Box>
                     {/* Icon user section */}
                     {/* <Box sx={{ flexGrow: 0 }}>
                         <Tooltip title="Open settings">

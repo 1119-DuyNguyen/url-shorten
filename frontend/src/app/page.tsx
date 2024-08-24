@@ -3,6 +3,14 @@ import HeaderNav from "./ui/nav-links";
 import Link from "next/link";
 import { Box, Grid, Typography } from "@mui/material";
 import HeroTextChange from "./ui/hero-text-change";
+import ShortenURLForm from "./ui/shorten-url-form";
+const words: string[] = [
+    "Business",
+    "Creators",
+    "Educators",
+    "Developers",
+    "Designers",
+];
 export default function Home() {
     return (
         <Grid
@@ -26,7 +34,8 @@ export default function Home() {
 
                     <Typography variant="h5" paddingBottom={2}>
                         Streamline your digital presence in just a click.
-                        <HeroTextChange />
+                        <br />
+                        For <HeroTextChange words={words} />
                     </Typography>
                     <Link
                         href="/about"
@@ -44,8 +53,7 @@ export default function Home() {
                     gap={2}
                     height="100%"
                 >
-                    {/* 
-              <DisplayUrl /> */}
+                    <ShortenURLForm></ShortenURLForm>
                 </Box>
             </Grid>
         </Grid>
